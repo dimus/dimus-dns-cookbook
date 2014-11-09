@@ -1,0 +1,7 @@
+DEPENDENCIES
+  dimus-dns
+    path: .
+    metadata: true
+
+GRAPH
+  dimus-dns (0.1.1)

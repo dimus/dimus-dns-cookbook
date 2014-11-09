@@ -1,23 +1,16 @@
 dimus-dns Cookbook
 ==================
-TODO: Enter the cookbook description here.
-
-e.g.
-This cookbook makes your favorite breakfast sandwich.
+Creates a basic dns for private network
 
 Requirements
 ------------
-TODO: List your cookbook requirements. Be sure to include any requirements this cookbook has on platforms, libraries, other cookbooks, packages, operating systems, etc.
 
-e.g.
-#### packages
-- `toaster` - dimus-dns needs toaster to brown your bagel.
+#### cookbooks
+- `maradns` - for installing name service
 
 Attributes
 ----------
-TODO: List your cookbook attributes here.
 
-e.g.
 #### dimus-dns::default
 <table>
   <tr>
@@ -27,19 +20,16 @@ e.g.
     <th>Default</th>
   </tr>
   <tr>
-    <td><tt>['dimus-dns']['bacon']</tt></td>
-    <td>Boolean</td>
-    <td>whether to include bacon</td>
-    <td><tt>true</tt></td>
+    <td><tt>['dimus-dns']['dns-servers']</tt></td>
+    <td>Array</td>
+    <td>list of external dns servers</td>
+    <td><tt>[]</tt></td>
   </tr>
 </table>
 
 Usage
 -----
 #### dimus-dns::default
-TODO: Write usage instructions for each cookbook.
-
-e.g.
 Just include `dimus-dns` in your node's `run_list`:
 
 ```json
@@ -51,18 +41,6 @@ Just include `dimus-dns` in your node's `run_list`:
 }
 ```
 
-Contributing
-------------
-TODO: (optional) If this is a public cookbook, detail the process for contributing. If this is a private cookbook, remove this section.
-
-e.g.
-1. Fork the repository on Github
-2. Create a named feature branch (like `add_component_x`)
-3. Write your change
-4. Write tests for your change (if applicable)
-5. Run the tests, ensuring they all pass
-6. Submit a Pull Request using Github
-
 License and Authors
 -------------------
-Authors: TODO: List authors
+Authors: Dmitry Mozzherin
