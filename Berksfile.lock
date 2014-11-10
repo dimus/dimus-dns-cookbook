@@ -4,4 +4,4 @@ DEPENDENCIES
     metadata: true
 
 GRAPH
-  dimus-dns (0.1.1)
+  dimus-dns (0.1.2)

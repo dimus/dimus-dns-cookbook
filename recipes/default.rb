@@ -15,12 +15,7 @@ service "maradns-zoneserver" do
   supports restart: true
 end
 
-node_name = node.name
 dns = data_bag_item("dimus-dns", "config")
-
-if node_name == dns["primary"]
-  source_file = "mararc-primary.erb"
-end
 
 template "/etc/maradns/mararc" do
   source "mararc.erb"
@@ -28,30 +23,38 @@ template "/etc/maradns/mararc" do
   owner "root"
   group "root"
   variables dns: dns
-  notifies :restart, resources(:service => "maradns")
+  notifies :restart, "service[maradns]"
 end
 
-hosts = search("node", "*:*")
-domains = {}
-hosts.each do |host|
-  if node.respond_to?(:domain) && node.domain.to_s != ""
-    record = { node.fqdn => node.ipaddress }
-    if domains[node.domain]
-      domains[node.domain] << record
+if Chef::Config[:solo]
+  msg = "dimus-dns::default uses search feture, it is"\
+        "it is icompatible with Chef Solo"
+  log msg do
+    level :warn
+  end
+else
+  hosts = search("node", "*:*")
+  domains = {}
+  hosts.each do |host|
+    next if host.domain.to_s == ""
+    record = { host.fqdn => host.ipaddress }
+    log "ADDING DNS RECORD: #{host.fqdn}: #{host.ipaddress}"
+    if domains[host.domain]
+      domains[host.domain] << record
     else
-      domains[node.domain] = [record]
+      domains[host.domain] = [record]
     end
   end
-end
 
-#zones.each loop
-dns["zones"].each do |zone|
-  template "/etc/maradns/db.#{zone["zone"]}" do
-    source "zone.erb"
-    variables :zone => zone, :domain => domains[zone["zone"]]
-    mode 0644
-    owner "root"
-    group "root"
-    notifies :restart, resources(:service => "maradns")
+  # zones.each loop
+  dns["zones"].each do |zone|
+    template "/etc/maradns/db." + zone["zone"] do
+      source "zone.erb"
+      variables zone: zone, domain: domains[zone["zone"]]
+      mode 0644
+      owner "root"
+      group "root"
+      notifies :restart, "service[maradns]"
+    end
   end
 end

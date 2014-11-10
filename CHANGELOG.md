@@ -3,10 +3,15 @@ dimus-dns CHANGELOG
 
 This file is used to list changes made in each version of the dimus-dns cookbook.
 
+0.1.3
+-----
+- dimus - Fix for automatic detection of ip addresses, cleanup for foodcritic
+          and rubocop
+
 0.1.1
 -----
 
-- dimus added maradns recipe
+- dimus - added maradns recipe
 
 0.1.0
 -----

@@ -28,5 +28,5 @@ verbose_level = 1
 # The following line must be uncommented to enable recursive queries
 root_servers = {}
 
-zone_transfer_acl = <%= @dns["zone_transfer_acl"] %>
+zone_transfer_acl = "<%= @dns["zone_transfer_acl"] %>"
 recursive_acl = "<%= @dns["recursive_acl"] %>"

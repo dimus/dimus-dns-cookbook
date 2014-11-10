@@ -8,25 +8,6 @@ Requirements
 #### cookbooks
 - `maradns` - for installing name service
 
-Attributes
-----------
-
-#### dimus-dns::default
-<table>
-  <tr>
-    <th>Key</th>
-    <th>Type</th>
-    <th>Description</th>
-    <th>Default</th>
-  </tr>
-  <tr>
-    <td><tt>['dimus-dns']['dns-servers']</tt></td>
-    <td>Array</td>
-    <td>list of external dns servers</td>
-    <td><tt>[]</tt></td>
-  </tr>
-</table>
-
 Usage
 -----
 #### dimus-dns::default
@@ -37,6 +18,37 @@ Just include `dimus-dns` in your node's `run_list`:
   "name":"my_node",
   "run_list": [
     "recipe[dimus-dns]"
+  ]
+}
+```
+You need data bag dimus-dns/config.json
+```json
+{
+  "id": "config",
+  "zone_transfer_acl": "",
+  "recursive_acl": "",
+  "zones": [
+    {
+      "zone": "vagrantup.com",
+      "SOA": "default-ubuntu-1204.vagrantup.com.",
+      "email": "hostmaster@vagrantup.com.",
+      "serial": "/serial",
+      "refresh": 1200,
+      "retry": 180,
+      "expire": 2419200,
+      "minimum": 1800,
+      "ns": [
+        {
+          "zone": "vagrantup.com.",
+          "nameserver": "default-ubuntu-1204.vagrantup.com."
+        } ],
+      "A": {
+        "something.vagrantup.com.": "10.0.0.111"
+      },
+      "CNAME": {
+        "something.vagrantup.com.": "everything.vagrantup.com."
+      }
+    }
   ]
 }
 ```
