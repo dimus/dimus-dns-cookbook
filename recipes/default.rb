@@ -24,7 +24,7 @@ def traverse_nodes
     record = [n.fqdn + ".", n.ipaddress]
     add_host(hsh, n, record)
     add_reverse_host(hsh, n, record)
-  end
+  end.sort
 end
 
 def add_host(res, n, record)
@@ -40,6 +40,12 @@ include_recipe "apt"
 
 %w(bind9 bind9utils bind9-doc).each do |pkg|
   package pkg
+end
+
+service "bind9" do
+  provider Chef::Provider::Service::Init
+  action :start
+  not_if "ps ax | grep named"
 end
 
 dns = dns_config
@@ -65,5 +71,6 @@ dns["zones"].each do |zone|
   template format("/etc/bind/zones/%s", zone["file"]) do
     source src
     variables zone: zone, hosts: (hosts[zone["name"]] || [])
+    notifies :restart, "service[bind9]"
   end
 end

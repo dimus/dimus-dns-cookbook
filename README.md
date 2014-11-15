@@ -2,6 +2,10 @@ dimus-dns Cookbook
 ==================
 Configures simple internal DNS with one master
 
+[![Cookbook version][1]][2]
+[![Continuous Integration Status][3]][4]
+
+
 Requirements
 ------------
 
@@ -56,3 +60,8 @@ You need data bag dimus-dns/config.json
 License and Authors
 -------------------
 Authors: Dmitry Mozzherin
+
+[1]: http://img.shields.io/cookbook/v/dimus/dimus-dns-cookbook.svg
+[2]: https://github.com/dimus/dimus-dns-cookbook
+[3]: http://img.shields.io/travis/dimus/dimus-dns-cookbook.svg
+[4]: http://travis-ci.org/dimus/dimus-dns-cookbook

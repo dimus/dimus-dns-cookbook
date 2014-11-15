@@ -3,6 +3,7 @@ describe "dimus-dns::default" do
 
   before do
     stub_data_bag_item("dimus-dns", "config").and_return("zones" => [])
+    stub_command("ps ax | grep named").and_return(nil)
   end
 
   it "does include apt" do
@@ -19,6 +20,10 @@ describe "dimus-dns::default" do
 
   it "installs bind9-doc" do
     expect(chef_run).to install_package "bind9-doc"
+  end
+
+  it "starts bind server" do
+    expect(chef_run).to start_service "bind9"
   end
 
   it "creates dir /etc/bind/zones" do
