@@ -15,19 +15,24 @@ def dns_hosts
 end
 
 def traverse_nodes
-  nodes = search("node", "*:*")
-  nodes.each_with_object({}) do |n, hsh|
-    next unless (n.domain rescue nil)
-    add_host(hsh, n)
+  search("node", "*:*").each_with_object({}) do |n, hsh|
+    begin
+      n.domain
+    rescue NoMethodError
+      next
+    end
+    record = [n.fqdn + ".", n.ipaddress]
+    add_host(hsh, n, record)
+    add_reverse_host(hsh, n, record)
   end
 end
 
-def add_host(res, n)
-  record = [n.fqdn + ".", n.ipaddress]
-  log "ADDING DNS RECORD: #{n.fqdn}: #{n.ipaddress}"
+def add_host(res, n, record)
   res[n.domain] ? res[n.domain] << record : res[n.domain] = [record]
+end
+
+def add_reverse_host(res, n, record)
   reverse = n.ipaddress.split(".")[0..-2].reverse.join(".") + ".in-addr.arpa"
-  log "DEBUG REVERSE " + reverse
   res[reverse] ? res[reverse] << record : res[reverse] = [record]
 end
 

@@ -5,5 +5,5 @@ DEPENDENCIES
 
 GRAPH
   apt (2.6.0)
-  dimus-dns (0.1.3)
+  dimus-dns (0.1.4)
     apt (~> 2.6)

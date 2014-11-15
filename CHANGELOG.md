@@ -3,6 +3,10 @@ dimus-dns CHANGELOG
 
 This file is used to list changes made in each version of the dimus-dns cookbook.
 
+0.1.4
+-----
+- dimus - moved do bind (dirty code so far)
+
 0.1.3
 -----
 - dimus - Fix for automatic detection of ip addresses, cleanup for foodcritic
