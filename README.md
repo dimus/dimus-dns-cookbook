@@ -1,12 +1,12 @@
 dimus-dns Cookbook
 ==================
-Creates a basic dns for private network
+Configures simple internal DNS with one master
 
 Requirements
 ------------
 
-#### cookbooks
-- `maradns` - for installing name service
+#### packages
+- `bind9` - for installing name service
 
 Usage
 -----

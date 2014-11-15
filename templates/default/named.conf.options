@@ -1,0 +1,35 @@
+# This file is created by Chef, your changes will be deleted
+# Here we set a trusted network that can talk to ns server
+# We forward 'normal' resolution to external servers
+# We allow to talk to forwarded servers and to resolve names only to trusted
+# network
+
+acl "<%= @dns["acl"]["name"] %>" {
+  <%= @dns["acl"]["network"] %>;
+  127.0.0.1;
+};
+
+options {
+  directory "/var/cache/bind";
+  recursion yes;                 # enables resursive queries
+  listen-on { <%= @dns["ns1"]["ip"] %>; };   # ns1 private IP address
+  allow-transfer { none; };
+  allow-query { <%= @dns["acl"]["name"] %>; };
+  allow-recursion { <%= @dns["acl"]["name"] %>; };
+
+
+  forwarders {
+    <%- @dns["external_ns"].each do |ip| -%>
+          <%= ip %>;
+    <%- end -%>
+  };
+
+  //========================================================================
+  // If BIND logs error messages about the root key being expired,
+  // you will need to update your keys.  See https://www.isc.org/bind-keys
+  //========================================================================
+  dnssec-validation auto;
+
+  auth-nxdomain no;    # conform to RFC1035
+  listen-on-v6 { any; };
+};

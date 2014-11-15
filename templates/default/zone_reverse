@@ -1,0 +1,19 @@
+; Auto-generated with Chef. Manual changes will be lost
+$TTL 3600
+@  IN      SOA     <%= @zone["name"] %>.  <%= @zone["email"] %> (
+                                <%= @zone["serial"]  %>  ; Serial
+                                <%= @zone["refresh"] %>  ; Refresh
+                                <%= @zone["retry"]   %>  ; Retry
+                                <%= @zone["expire"]  %>  ; Expire
+                                <%= @zone["minimum"] %>  ; Minimum
+                        )
+<%- @zone["ns"].each do |ns| -%>
+                  NS  <%= ns["nameserver"] %>
+<%- end -%>
+
+<%- hosts = @zone["A"] + @hosts -%>
+<%- hosts.each do |host, ip| -%>
+<%- ip = ip.split(".").last -%>
+<%= "#{ip}#{" " * (15 - ip.size)}" %>IN    PTR    <%= host %>
+<%- end -%>
+

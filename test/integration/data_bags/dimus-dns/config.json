@@ -1,28 +1,59 @@
 {
   "id": "config",
-  "zone_transfer_acl": "",
-  "recursive_acl": "",
+  "acl": {
+    "name": "trusted",
+    "network": "10.0.0/8"
+  },
+  "ns1": {
+    "ip": "10.0.2.15"
+  },
+  "external_ns": ["8.8.8.8"],
   "zones": [
+  {
+    "name": "vagrantup.com",
+    "file": "vagrantup.com",
+    "direction": "forward",
+    "SOA": "default-ubuntu-1204.vagrantup.com.",
+    "email": "hostmaster.vagrantup.com.",
+    "serial": "/serial",
+    "refresh": "8H",
+    "retry": "2H",
+    "expire": "1W",
+    "minimum": "1D",
+    "ns": [
     {
-      "zone": "vagrantup.com",
-      "SOA": "default-ubuntu-1204.vagrantup.com.",
-      "email": "hostmaster@vagrantup.com.",
-      "serial": "/serial",
-      "refresh": 1200,
-      "retry": 180,
-      "expire": 2419200,
-      "minimum": 1800,
-      "ns": [
-        {
-          "zone": "vagrantup.com.",
-          "nameserver": "default-ubuntu-1204.vagrantup.com."
-        } ],
-      "A": {
-        "something.vagrantup.com.": "10.0.0.111"
-      },
-      "CNAME": {
-        "something.vagrantup.com.": "everything.vagrantup.com."
-      }
-    }
+      "zone": "vagrantup.com.",
+      "nameserver": "default-ubuntu-1204.vagrantup.com."
+    } ],
+    "A": [
+    [ "something.vagrantup.com.", "10.0.0.111" ]
+    ],
+    "CNAME": [
+      [ "something.vagrantup.com.", "everything.vagrantup.com." ]
+    ]
+  },
+  {
+    "name": "2.0.10.in-addr.arpa",
+    "file": "db.2.0.10",
+    "direction": "reverse",
+    "SOA": "default-ubuntu-1204.vagrantup.com.",
+    "email": "hostmaster.vagrantup.com.",
+    "serial": "/serial",
+    "refresh": "8H",
+    "retry": "2H",
+    "expire": "1W",
+    "minimum": "1D",
+    "ns": [
+    {
+      "zone": "vagrantup.com.",
+      "nameserver": "default-ubuntu-1204.vagrantup.com."
+    } ],
+    "A": [
+      [ "something.vagrantup.com.", "10.0.0.111" ]
+    ],
+      "CNAME": [
+      [ "something.vagrantup.com.", "everything.vagrantup.com." ]
+    ]
+  }
   ]
 }

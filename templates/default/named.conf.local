@@ -1,0 +1,10 @@
+# File is created by Chef, your changes will be lost
+#
+# Do any local configuration here
+#
+<%- @dns["zones"].each do |zone| -%>
+zone "<%= zone["name"] %>" {
+  type <%= zone["type"] || "master" %>;
+  file "/etc/bind/zones/<%= zone["file"] %>";
+} ;
+<%- end -%>
