@@ -24,7 +24,7 @@ def traverse_nodes
     record = [n.fqdn + ".", n.ipaddress]
     add_host(hsh, n, record)
     add_reverse_host(hsh, n, record)
-  end.sort
+  end
 end
 
 def add_host(res, n, record)
