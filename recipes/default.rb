@@ -15,7 +15,7 @@ def dns_hosts
 end
 
 def traverse_nodes
-  search("node", "*:*").each_with_object({}) do |n, hsh|
+  nodes = search("node", "*:*").each_with_object({}) do |n, hsh|
     begin
       n.domain
     rescue NoMethodError
@@ -25,6 +25,8 @@ def traverse_nodes
     add_host(hsh, n, record)
     add_reverse_host(hsh, n, record)
   end
+  nodes.keys.each { |k| nodes[k].sort! }
+  nodes
 end
 
 def add_host(res, n, record)
